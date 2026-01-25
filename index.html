@@ -1,186 +1,137 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>مكتبة القراءة</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<title>الموقع تحت الصيانة</title>
 
 <style>
-body{
-    margin:0;
-    font-family:'Amiri', serif;
-    background:#f3e8d8;
-    color:#3b2a1a;
-}
+    body {
+        background: linear-gradient(135deg, #5a3a1e, #8b5a2b);
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color: #fff;
+        direction: rtl;
+        margin: 0;
+        padding: 0;
+    }
 
-/* HERO */
-.hero{
-    background:url('https://i.pinimg.com/1200x/40/3c/b2/403cb28329ca2d91f4ebb374c7f93540.jpg') center/cover;
-    height:90vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#fff;
-}
-.hero-overlay{
-    background:rgba(0,0,0,.55);
-    padding:50px;
-    border-radius:12px;
-}
-.hero h1{
-    font-size:48px;
-    margin-bottom:15px;
-}
-.hero p{
-    font-size:20px;
-    margin-bottom:25px;
-}
-.btn{
-    background:#7a5a3a;
-    color:#fff;
-    padding:12px 30px;
-    border-radius:25px;
-    text-decoration:none;
-    font-size:18px;
-}
-.btn:hover{
-    background:#5a3f26;
-}
+    button {
+        margin-top: 80px;
+        padding: 15px 35px;
+        font-size: 22px;
+        font-weight: bold;
+        background: #3e2612;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-/* SECTIONS */
-section{
-    padding:60px 8%;
-}
-h2{
-    text-align:center;
-    font-size:32px;
-    margin-bottom:40px;
-}
+    .track {
+        position: relative;
+        width: 80%;
+        height: 120px;
+        margin: 60px auto;
+        background: #7a4a25;
+        border-radius: 60px;
+        overflow: hidden;
+        display: none;
+    }
 
-/* BOOKS */
-.books{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:25px;
-}
-.book{
-    background:#fff;
-    border-radius:15px;
-    box-shadow:0 10px 20px rgba(0,0,0,.15);
-    padding:20px;
-    text-align:center;
-    transition:.3s;
-}
-.book:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 30px rgba(0,0,0,.25);
-}
-.book img{
-    width:100%;
-    aspect-ratio:3/4;
-    object-fit:cover;
-    border-radius:10px;
-}
-.book h3{
-    margin:15px 0 5px;
-}
-.book p{
-    font-size:14px;
-    opacity:.8;
-}
+    .lane {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 4px;
+        background: rgba(255,255,255,0.4);
+    }
 
-/* CATEGORIES */
-.categories{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:25px;
-}
-.category{
-    background:#fff;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 8px 18px rgba(0,0,0,.15);
-    text-decoration:none;
-    color:#3b2a1a;
-    font-size:22px;
-    transition:.3s;
-}
-.category:hover{
-    background:#7a5a3a;
-    color:#fff;
-    transform:translateY(-5px);
-}
+    .runner {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        font-size: 50px;
+        transition: left 4s linear;
+        transform: scaleX(-1); /* تصحيح الاتجاه */
+    }
 
-/* FOOTER */
-footer{
-    background:#3b2a1a;
-    color:#f3e8d8;
-    text-align:center;
-    padding:30px;
-    font-size:18px;
-}
+    .finish {
+        position: absolute;
+        right: 20px;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        background: repeating-linear-gradient(
+            white,
+            white 10px,
+            black 10px,
+            black 20px
+        );
+    }
+
+    .result {
+        display: none;
+        margin-top: 40px;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .flower {
+        font-size: 80px;
+    }
+
+    .text {
+        margin-top: 15px;
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-    <div class="hero-overlay">
-        <h1>اقرأ • تعلّم • استمتع</h1>
-        <p>رحلة بين آلاف الكتب القيّمة</p>
-        <a href="#books" class="btn">تصفح الكتب</a>
-    </div>
+<button id="startBtn" onclick="startRace()">اضغط هنا</button>
+
+<div class="track" id="track">
+    <div class="lane"></div>
+    <div class="runner" id="runner">🏃‍♂️</div>
+    <div class="finish"></div>
 </div>
 
-<!-- BOOKS -->
-<section id="books">
-    <h2>أحدث الكتب</h2>
-    <div class="books">
+<div class="result" id="result">
+    <div class="flower">👨‍🦱🌹</div>
+    <div class="text">الموقع تحت الصيانة</div>
+</div>
 
-        <div class="book">
-            <img src="https://pbs.twimg.com/media/FhYZm9aWYAATlMg.jpg">
-            <h3>أغزر الأفكار</h3>
-            <p>تطوير الذات</p>
-        </div>
+<script>
+function startRace() {
+    const btn = document.getElementById("startBtn");
+    const track = document.getElementById("track");
+    const runner = document.getElementById("runner");
+    const result = document.getElementById("result");
 
-        <div class="book">
-            <img src="https://i.pinimg.com/736x/f3/5a/5a/f35a5aa03fc395edb94443607bbe9b19.jpg">
-            <h3>سحر الخيال</h3>
-            <p>روايات</p>
-        </div>
+    // reset
+    runner.style.left = "0";
+    track.style.display = "block";
+    result.style.display = "none";
+    btn.style.display = "none";
 
-        <div class="book">
-            <img src="https://i.pinimg.com/736x/ce/b0/42/ceb042d2174981582d6f0b69ab86468e.jpg">
-            <h3>التاريخ الإسلامي</h3>
-            <p>تاريخ</p>
-        </div>
+    // بدء الجري
+    setTimeout(() => {
+        runner.style.left = "85%";
+    }, 100);
 
-        <div class="book">
-            <img src="https://i.pinimg.com/736x/77/6d/2a/776d2a3e002ec5bc29cb942fc6e77b0d.jpg">
-            <h3>الفكر الفلسفي</h3>
-            <p>فلسفة</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- CATEGORIES -->
-<section>
-    <h2>تصفح حسب التصنيفات</h2>
-    <div class="categories">
-        <a href="riwayat.html" class="category">📖 روايات</a>
-        <a href="tarikh.html" class="category">🏛️ تاريخ</a>
-        <a href="tatwir.html" class="category">🧠 تطوير الذات</a>
-        <a href="falsafa.html" class="category">⚖️ فلسفة</a>
-    </div>
-</section>
-
-<footer>
-الكتب هي مرشدنا الصامت
-</footer>
+    // نهاية السباق
+    setTimeout(() => {
+        track.style.display = "none";
+        result.style.display = "block";
+    }, 4200);
+}
+</script>
 
 </body>
 </html>
