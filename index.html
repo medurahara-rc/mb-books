@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الموقع تحت الصيانة</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCC7CSL0M6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CCC7CSL0M6');
+    </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #F5E6D3; /* لون بني فاتح */
+            background-color: #F5E6D3;
             text-align: center;
             padding: 50px;
         }
@@ -29,9 +39,9 @@
 
         #final {
             margin-top: 30px;
-            display: none; /* مخفي في البداية */
+            display: none;
             opacity: 0;
-            transition: opacity 1s ease-in; /* تأثير fade-in */
+            transition: opacity 1s ease-in;
         }
 
         #final img {
@@ -44,14 +54,13 @@
             margin-top: 10px;
             font-size: 20px;
             font-weight: bold;
-            color: #B22222; /* لون أحمر للنص */
+            color: #B22222;
         }
     </style>
 </head>
 <body>
 
     <button id="startBtn">اضغط هنا</button>
-
     <div id="counter"></div>
 
     <div id="final">
@@ -65,23 +74,24 @@
         const final = document.getElementById('final');
 
         startBtn.addEventListener('click', () => {
-            startBtn.style.display = "none"; // إخفاء الزر بعد الضغط
+            startBtn.style.display = "none";
             counter.textContent = "";
-            final.style.display = "none"; // مخفي الصورة والنص قبل العداد
-            final.style.opacity = 0; // إعادة opacity للfade-in
-            let sequence = [3, 2, 1, 0]; // العد التنازلي
+            final.style.display = "none";
+            final.style.opacity = 0;
+
+            let sequence = [3, 2, 1, 0];
             let index = 0;
 
             function showNext() {
                 if (index < sequence.length) {
                     counter.textContent = sequence[index];
                     index++;
-                    setTimeout(showNext, 1000); // كل ثانية
+                    setTimeout(showNext, 1000);
                 } else {
-                    counter.textContent = ""; // إخفاء العداد
-                    final.style.display = "block"; // إظهار العنصر
+                    counter.textContent = "";
+                    final.style.display = "block";
                     setTimeout(() => {
-                        final.style.opacity = 1; // بدء fade-in
+                        final.style.opacity = 1;
                     }, 50);
                 }
             }
