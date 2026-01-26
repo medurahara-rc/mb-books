@@ -4,16 +4,6 @@
 <meta charset="UTF-8">
 <title>الموقع تحت الصيانة</title>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-79DV6ELEXY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-79DV6ELEXY');
-</script>
-
 <style>
     body {
         background: linear-gradient(135deg, #5a3a1e, #8b5a2b);
@@ -62,7 +52,7 @@
         left: 0;
         font-size: 50px;
         transition: left 4s linear;
-        transform: scaleX(-1); /* تصحيح الاتجاه */
+        transform: scaleX(-1);
     }
 
     .finish {
@@ -118,7 +108,40 @@
 </div>
 
 <script>
+// ===== Bot / Human Detection =====
+let humanAction = false;
+
+document.addEventListener("mousemove", () => humanAction = true);
+document.addEventListener("scroll", () => humanAction = true);
+document.addEventListener("touchstart", () => humanAction = true);
+
+function isBot() {
+    const ua = navigator.userAgent.toLowerCase();
+    const bots = [
+        "bot","crawl","spider","slurp",
+        "curl","wget","python","headless"
+    ];
+
+    if (navigator.webdriver) return true;
+
+    for (let b of bots) {
+        if (ua.includes(b)) return true;
+    }
+    return false;
+}
+
+// ===== Original Function (modified) =====
 function startRace() {
+
+    // فحص واش bot ولا بنادم
+    if (isBot() || !humanAction) {
+        console.log("🤖 Bot detected");
+        alert("الدخول غير مسموح للبوتات");
+        return;
+    }
+
+    console.log("🧑 Human visitor");
+
     const btn = document.getElementById("startBtn");
     const track = document.getElementById("track");
     const runner = document.getElementById("runner");
