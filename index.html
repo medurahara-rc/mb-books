@@ -1,103 +1,135 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع تحت الصيانة</title>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCC7CSL0M6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-CCC7CSL0M6');
-    </script>
-
+    <title>Modern Notification</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #F5E6D3;
-            text-align: center;
-            padding: 50px;
+            font-family: 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
         }
 
-        button {
-            background-color: #D2A679;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
         }
 
-        #counter {
-            font-size: 60px;
-            font-weight: bold;
-            margin-top: 40px;
+        .toast {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 4px solid #e74c3c;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 350px;
+            animation: slideIn 0.3s ease-out;
         }
 
-        #final {
-            margin-top: 30px;
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in;
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        #final img {
-            width: 300px;
-            border-radius: 10px;
-            margin-top: 20px;
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
 
-        #final p {
-            margin-top: 10px;
+        .toast.hide {
+            animation: slideOut 0.3s ease-in forwards;
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            background: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-size: 20px;
-            font-weight: bold;
-            color: #B22222;
+        }
+
+        .toast-content h4 {
+            margin: 0 0 4px 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .toast-content p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .demo-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <button id="startBtn">اضغط هنا</button>
-    <div id="counter"></div>
-
-    <div id="final">
-        <img src="https://i.pinimg.com/1200x/32/72/b7/3272b772baad81f58bf27a415dd7ab5e.jpg" alt="رجل حامل وردة">
-        <p>الموقع تحت الصيانة</p>
-    </div>
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <button class="demo-btn" onclick="showURLChanged()">اختبار التنبيه</button>
 
     <script>
-        const startBtn = document.getElementById('startBtn');
-        const counter = document.getElementById('counter');
-        const final = document.getElementById('final');
+        function showURLChanged() {
+            const container = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-icon">⚠️</div>
+                <div class="toast-content">
+                    <h4>تنبيه مهم</h4>
+                    <p>تم تغيير URL الموقع - يرجى تحديث الرابط</p>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
 
-        startBtn.addEventListener('click', () => {
-            startBtn.style.display = "none";
-            counter.textContent = "";
-            final.style.display = "none";
-            final.style.opacity = 0;
-
-            let sequence = [3, 2, 1, 0];
-            let index = 0;
-
-            function showNext() {
-                if (index < sequence.length) {
-                    counter.textContent = sequence[index];
-                    index++;
-                    setTimeout(showNext, 1000);
-                } else {
-                    counter.textContent = "";
-                    final.style.display = "block";
-                    setTimeout(() => {
-                        final.style.opacity = 1;
-                    }, 50);
-                }
-            }
-
-            showNext();
-        });
+        // Auto-show on page load
+        window.addEventListener('load', showURLChanged);
     </script>
 
 </body>
